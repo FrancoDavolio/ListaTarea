@@ -3,10 +3,14 @@ import ListaTarea from "./ListaTarea";
 import { useState, useEffect } from "react";
 
 const FormularioTarea = () => {
-  
+  const tareasLocalStorage =
+    JSON.parse(localStorage.getItem("listaTareas")) || [];
   const [tarea, setTarea] = useState("");
-  const [arregloTareas, setArregloTareas] = useState([]);
+  const [arregloTareas, setArregloTareas] = useState(tareasLocalStorage);
 
+  useEffect(() => {
+    localStorage.setItem("listaTareas", JSON.stringify(arregloTareas));
+  }, [arregloTareas]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
