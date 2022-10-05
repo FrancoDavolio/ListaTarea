@@ -1,17 +1,23 @@
-import React, { useSyncExternalStore } from "react";
 import { Form, Button } from "react-bootstrap";
 import ListaTarea from "./ListaTarea";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const FormularioTarea = () => {
+  
   const [tarea, setTarea] = useState("");
   const [arregloTareas, setArregloTareas] = useState([]);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Desde handleSubmit");
     setArregloTareas([...arregloTareas, tarea]);
     setTarea("");
+  };
+
+  const borrarTarea = (nombre) => {
+    let arregloModificado = arregloTareas.filter((item) => item !== nombre);
+    setArregloTareas(arregloModificado);
   };
 
   return (
@@ -29,7 +35,10 @@ const FormularioTarea = () => {
           </Button>
         </Form.Group>
       </Form>
-      <ListaTarea></ListaTarea>
+      <ListaTarea
+        arregloTareas={arregloTareas}
+        borrarTarea={borrarTarea}
+      ></ListaTarea>
     </div>
   );
 };
